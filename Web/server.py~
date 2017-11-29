@@ -1,0 +1,17 @@
+import sys
+import socket
+
+host = ""
+port = int(sys.argv[1])
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((host, port))
+server.listen(1)
+conn, addr = server.accept()
+print 'Connected by', addr
+while 1:
+    data = conn.recv(1024)
+    if not data: break
+    headers = data.split("\n")
+    print headers
+    conn.sendall(data)
+conn.close()
